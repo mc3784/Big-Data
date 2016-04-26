@@ -2,6 +2,9 @@
 import numpy as np
 import pandas as pd
 import sys
+import json
+import datetime as dt
+
 fileName = 'sample3.csv'
 try:
 	fileName = sys.argv[1]
@@ -36,9 +39,16 @@ for df in neighborDf:
     df['end_week_after'] = df['Date'].values.searchsorted(end_date, side='left')
     df['count_week_after'] = df.apply(sum_week_after, axis=1)
     df['count_week_before'] = df.apply(sum_week_before, axis=1)
+    df['Date']=df['Date'].apply(lambda x: dt.datetime.strftime(x, '%Y-%m-%d'))
     dfToSave=df[['Date','count_week_before','count_week_after']]
     weekBefore[neighborIndex]=dfToSave.set_index('Date')['count_week_before'].to_dict()
     weekAfter[neighborIndex]= dfToSave.set_index('Date')['count_week_after'].to_dict()
+
+with open('weekBefore.txt', 'w+') as f:
+    json.dump(weekBefore, f)
+
+with open('weekAfter.txt', 'w+') as f:
+    json.dump(weekBefore, f)
 
 print "Dictionary for the week before: "
 print weekBefore
