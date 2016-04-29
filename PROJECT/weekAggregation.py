@@ -48,7 +48,7 @@ with open('weekBefore.txt', 'w+') as f:
     json.dump(weekBefore, f)
 
 with open('weekAfter.txt', 'w+') as f:
-    json.dump(weekBefore, f)
+    json.dump(weekAfter, f)
 
 print "Dictionary for the week before: "
 print weekBefore
